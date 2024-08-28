@@ -50,7 +50,7 @@ const Users = () => {
         setCurrentPage(totalPages);
     };
 
-    const handleUsersPerPageChange = (e) => {
+    const handleUsersPerPageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setUsersPerPage(Number(e.target.value));
         setCurrentPage(1);
     };
@@ -67,17 +67,26 @@ const Users = () => {
         setShowAddUserForm(!showAddUserForm);
     };
 
-    const handleSearchChange = (e) => {
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
         setCurrentPage(1);
     };
 
-    const handleFilterRoleChange = (e) => {
+    const handleFilterRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setFilterRole(e.target.value);
         setCurrentPage(1);
     };
 
-    const onSubmitProp = (user) => {
+    interface User {
+        id: number;
+        email: string;
+        phoneNumber: string;
+        firstName: string;
+        lastName: string;
+        role: string;
+    }
+
+    const onSubmitProp = (user: User) => {
         setUsersData((usersData) => [...usersData, user]);
     };
 

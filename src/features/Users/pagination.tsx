@@ -1,6 +1,6 @@
-import React from 'react';
 
-const Pagination = ({ currentPage, totalPages, goToNextPage, goToPrevPage, goToFirstPage, goToLastPage }) => {
+
+const Pagination = ({ currentPage, totalPages, goToNextPage, goToPrevPage, goToFirstPage, goToLastPage }: { currentPage: number, totalPages: number, goToNextPage: () => void, goToPrevPage: () => void, goToFirstPage: () => void, goToLastPage: () => void }) => {
     return (
         <nav>
             <ul className="w-full flex justify-center gap-1 sm:gap-5">

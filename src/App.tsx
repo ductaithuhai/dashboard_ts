@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css'
 import Layout from './components/layout';
@@ -9,15 +9,15 @@ function App() {
 
   return (
     <>
-    <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Layout />} >
-      <Route index element={<Dashboard />} />
-      <Route path="/Users" element={<Users />} />
-      </Route>
-    </Routes>     
-    </BrowserRouter>
-                   
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />} >
+            <Route index element={<Dashboard />} />
+            <Route path="/Users" element={<Users />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+
     </>
   )
 }
