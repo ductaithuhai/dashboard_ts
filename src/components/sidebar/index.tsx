@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { dashboard_navigation } from "./navi";
 
 const linkClasses =
-    "w-full flex items-center justify-center gap-5 font-light text-white text-lg";
+    "w-full flex items-center justify-center gap-5 font-light text-white lg:text-lg text-3xl";
 
 function Sidebar() {
     return (
@@ -22,11 +22,11 @@ function Sidebar() {
             </div>
 
             <div className="flex-1 w-full h-full flex flex-col justify-start items-center gap-5">
-                <div className="w-11/12 flex justify-center items-center gap-2 py-3 mt-5 text-orange-500 bg-white rounded-lg text-xl">
-                    <i className="fa-solid fa-chalkboard-user"></i>
-                    <div>Dashboard</div>
+                <div className="w-auto flex justify-center items-center gap-2 py-3 px-5 lg:mt-5 mt-10 text-orange-500 bg-white rounded-lg text-xl">
+                    <i className="fa-solid fa-chalkboard-user lg:text-2xl text-3xl"></i>
+                    <div className="lg:block hidden">Dashboard</div>
                 </div>
-                <div className="w-full flex flex-col justify-center items-center gap-6">
+                <div className="w-full flex flex-col justify-center items-center lg:gap-6 gap-10">
                     {dashboard_navigation.map((item) => (
                         <NavigationLink key={item.key} item={item} />
                     ))}
@@ -35,7 +35,16 @@ function Sidebar() {
         </div>
     );
 
-    function NavigationLink({ item }) {
+    interface items {
+        key: string;
+        label: string;
+        className: string;
+        icon: string;
+        path: string;
+    } 
+
+    function NavigationLink({ item }: { item: items }) {
+
         return (
             <Link to={item.path} className={`hover:bg-orange-500 ${linkClasses}`}>
                 <span className={item.className}>

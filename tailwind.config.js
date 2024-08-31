@@ -15,6 +15,9 @@ export default {
       backdropBlur: {
         md: "10px",
       },
+      fontFamily: {
+        sans: ['"Comfortaa", sans-serif'],
+      },
     },
   },
   plugins: [],

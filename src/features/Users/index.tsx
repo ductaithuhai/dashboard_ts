@@ -93,13 +93,13 @@ const Users = () => {
     return (
         <>
             <div className='max-w-full h-full grid grid-rows-12'>
-                <div className='row-start-1 row-end-2 w-full h-auto flex justify-between items-center sm:px-12 px-2 py-2'>
-                    <div className='text-2xl sm:text-3xl font-bold'>User</div>
+                <div className='row-start-1 row-end-2 w-full h-auto flex justify-between items-center sm:px-4 px-6 py-2'>
+                    <div className='text-2xl sm:text-5xl font-bold'>User</div>
                     <div className='w-full flex justify-end gap-5'>
                         <button className='hidden sm:flex sm:bg-white sm:bg-opacity-100 sm:text-black sm:px-4 sm:py-2 sm:rounded-full' onClick={exportToExcel}>
                             Export to Excel
                         </button>
-                        <button className='flex sm:hidden bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full text-sm' onClick={exportToExcel}>
+                        <button className='flex sm:hidden bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1.5 rounded-full' onClick={exportToExcel}>
                             Export
                         </button>
                         <button className='bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full' onClick={toggleFormProp}>
@@ -108,14 +108,14 @@ const Users = () => {
                     </div>
                 </div>
 
-                <div className='row-start-2 row-end-3 w-full h-auto flex lg:justify-start items-center justify-between gap-5 py-3 sm:px-12 px-2'>
-                    <input className='w-1/2 sm:w-full bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full'
+                <div className='row-start-2 row-end-3 w-full h-auto flex lg:justify-start items-center justify-start gap-5 py-3 sm:px-4 px-2'>
+                    <input className='w-1/2 sm:w-1/4 lg:w-1/6 bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full'
                         type="text"
                         placeholder="Search by email, first name, last name..."
                         value={searchTerm}
                         onChange={handleSearchChange}
                     />
-                    <select className='w-1/2 sm:w-full bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full'
+                    <select className='w-1/2 sm:w-1/4 lg:w-1/6 bg-white bg-opacity-100 text-black sm:px-6 px-2 sm:py-2 py-[6.5px] rounded-full'
                         value={filterRole}
                         onChange={handleFilterRoleChange}
                     >
@@ -124,14 +124,14 @@ const Users = () => {
                         <option value="Admin">Admin</option>
                     </select>
 
-                    <button className='bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full' onClick={exportToExcel}>
+                    <button className='bg-white bg-opacity-100 sm:w-1/4 lg:w-1/6 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full' onClick={exportToExcel}>
                         Search
                     </button>
                 </div>
 
-                <div className='text-sm sm:text-base row-start-3 row-end-12 w-full h-full max-h-[400px] sm:max-h-[800px] lg:max-h-[450px] lg:overflow-auto overflow-x-scroll'>
+                <div className='text-sm sm:text-base row-start-3 row-end-12 sm:p-4 p-2 w-full h-full max-h-[400px] sm:max-h-[800px] lg:max-h-[450px] lg:overflow-auto overflow-x-scroll'>
                     <table className='w-full min-w-full h-full'>
-                        <thead className='text-left table-header-group w-full h-full'>
+                        <thead className='text-left table-header-group w-full h-1/6'>
                             <tr>
                                 <th className='px-4 py-2'>No</th>
                                 <th className='px-4 py-2'>Email</th>

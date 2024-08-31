@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm,SubmitHandler } from "react-hook-form";
 import PropTypes from "prop-types";
 import avatarplaceholder from "../../assets/img/avatarplaceholder.png";
 import "./styles.css";
@@ -10,6 +10,8 @@ interface User {
     firstName: string;
     lastName: string;
     role: string;
+    password: string;
+    confirmPassword: string;
 }
 const AddUserForm = ({
     onSubmit,
@@ -24,42 +26,43 @@ const AddUserForm = ({
         watch,
         formState: { errors },
         reset,
-    } = useForm();
-    const [avatar, setAvatar] = useState(avatarplaceholder);
-    const [preview, setPreview] = useState(null);
-
-    const handleFormSubmit = (newUser: User) => {
-        onSubmit(newUser);
-        reset();
-        toggleForm();
-    };
+    } = useForm<User>();
+    const [avatar, setAvatar] = useState({ src: avatarplaceholder });
+    const [preview, setPreview1] = useState<string | null>(null);
 
     const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
-            const reader = new FileReader();
+            const reader: FileReader = new FileReader();
             reader.onloadend = () => {
-                setPreview(reader.result as string);
-                setAvatar(reader.result as string);
+                if (typeof reader.result === "string") {
+                    setPreview1(reader.result);
+                    setAvatar({ src: reader.result });
+                }
             };
             reader.readAsDataURL(file);
         }
     };
 
+    const handleFormSubmit: SubmitHandler<User> = (newUser: User) => {
+        onSubmit(newUser);
+        reset();
+        toggleForm();
+    };
     return (
-        <div className="fixed w-5/6 h-4/5 sm:h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 grid grid-cols-4 bg-orange-400 rounded-3xl z-50">
-            <div className="col-span-3 h-4/5 sm:h-full flex flex-col gap-5 justify-center items-start p-8 bg-orange-400 text-black rounded-l-3xl">
-                <div className="sm:text-3xl text-2xl">Add New User</div>
-                <div className="sm:text-2xl text-xl">User Detail</div>
+        <div className="fixed w-5/6 h-4/5 sm:h-niceper top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:grid lg:grid-cols-4 flex flex-col justify-center items-center bg-orange-400 rounded-3xl z-50">
+            <div className="lg:col-span-3 h-4/5 lg:h-niceper w-full flex flex-col sm:gap-5 gap-1 justify-center items-start sm:p-8 p-4 bg-orange-400 text-white rounded-t-3xl lg:rounded-l-3xl">
+                <div className="sm:text-3xl text-xl ">Add New User</div>
+                <div className="sm:text-2xl text-lg">User Detail</div>
                 <form
                     className="w-full h-full flex flex-col items-center justify-between sm:gap-5 gap-2"
-                    onSubmit={handleSubmit(handleFormSubmit as any)}
+                    onSubmit={handleSubmit(handleFormSubmit)}
                 >
-                    <div className="w-full flex justify-center gap-12">
+                    <div className="w-full flex justify-center lg:gap-24 sm:gap-12 gap-6">
                         <div className="w-5/12 flex flex-col gap-3">
-                            <label>Email</label>
+                            <label className="sm:text-xl text-sm">Email</label>
                             <input
-                                className="h-8 rounded-lg text-black"
+                                className="sm:text-xl text-sm px-2 sm:h-12 h-6 rounded-full text-black"
                                 type="email"
                                 placeholder="email@address.com"
                                 {...register("email", {
@@ -75,9 +78,9 @@ const AddUserForm = ({
                             )}
                         </div>
                         <div className="w-5/12 flex flex-col gap-3 rounded-lg">
-                            <label>Role</label>
+                            <label className="sm:text-xl text-sm">Role</label>
                             <select
-                                className="h-8 rounded-lg text-black"
+                                className="sm:text-xl text-sm px-2 sm:h-12 h-6 rounded-full text-black"
                                 {...register("role", { required: "Role is required" })}
                             >
                                 <option value="User">User</option>
@@ -89,9 +92,9 @@ const AddUserForm = ({
                         </div>
                     </div>
                     <div className="w-11/12 flex flex-col text-left">
-                        <label>Phone Number</label>
+                        <label className="sm:text-xl text-sm">Phone Number</label>
                         <input
-                            className="h-8 rounded-lg text-black"
+                            className="sm:text-xl text-sm px-2 sm:h-12 h-6 rounded-full text-black"
                             type="tel"
                             placeholder="0911222333"
                             {...register("phoneNumber", {
@@ -106,11 +109,11 @@ const AddUserForm = ({
                             <p style={{ color: "red" }}>{errors.phoneNumber.message as string as string}</p>
                         )}
                     </div>
-                    <div className="w-full flex justify-center items-center gap-12">
+                    <div className="w-full flex justify-center items-center lg:gap-24 sm:gap-12 gap-6">
                         <div className="w-5/12 flex flex-col items-start ">
-                            <label>First Name</label>
+                            <label className="sm:text-xl text-sm">First Name</label>
                             <input
-                                className="w-full h-8 rounded-lg text-black"
+                                className="w-full sm:text-xl text-sm px-2 sm:h-12 h-6 rounded-full text-black"
                                 type="text"
                                 placeholder="John"
                                 {...register("firstName", {
@@ -122,9 +125,9 @@ const AddUserForm = ({
                             )}
                         </div>
                         <div className="w-5/12 flex flex-col items-start">
-                            <label>Last Name</label>
+                            <label className="sm:text-xl text-sm">Last Name</label>
                             <input
-                                className="w-full h-8 rounded-lg text-black"
+                                className="w-full sm:text-xl text-sm px-2 sm:h-12 h-6 rounded-full text-black"
                                 type="text"
                                 placeholder="Doe"
                                 {...register("lastName", { required: "Last name is required" })}
@@ -135,9 +138,9 @@ const AddUserForm = ({
                         </div>
                     </div>
                     <div className="w-11/12 flex flex-col text-left">
-                        <label>Password</label>
+                        <label className="sm:text-xl text-sm">Password</label>
                         <input
-                            className="h-8 rounded-lg text-black"
+                            className="sm:text-xl text-sm px-2 sm:h-12 h-6 rounded-full text-black"
                             type="password"
                             placeholder="Password"
                             {...register("password", { required: "Password is required" })}
@@ -147,9 +150,9 @@ const AddUserForm = ({
                         )}
                     </div>
                     <div className="w-11/12 flex flex-col text-left">
-                        <label>Confirm Password</label>
+                        <label className="sm:text-xl text-sm">Confirm Password</label>
                         <input
-                            className="h-8 rounded-lg text-black"
+                            className="sm:text-xl text-sm px-2 sm:h-12 h-6 rounded-full text-black"
                             type="password"
                             placeholder="Confirm Password"
                             {...register("confirmPassword", {
@@ -162,15 +165,15 @@ const AddUserForm = ({
                             <p style={{ color: "red" }}>{errors.confirmPassword.message as string}</p>
                         )}
                     </div>
-                    <div className="w-full flex items-center justify-between sm:gap-10 gap-2">
+                    <div className="w-full flex items-center justify-center sm:gap-10 gap-2">
                         <button
-                            className="bg-white sm:px-8 sm:py-2 px-4 py-1 text-sm sm:text-base text-orange-600 rounded-lg"
+                            className="bg-white sm:text-xl text-sm sm:px-8 sm:py-4 px-4 py-1 text-orange-600 rounded-full hover:bg-bg-primary hover:text-white"
                             type="submit"
                         >
                             Add User
                         </button>
                         <button
-                            className="bg-white sm:px-8 sm:py-2 px-4 py-1 text-sm sm:text-base text-orange-600 rounded-lg"
+                            className="bg-white sm:text-xl text-sm sm:px-8 sm:py-4 px-4 py-1 text-orange-600 rounded-full hover:bg-bg-primary hover:text-white"
                             type="button"
                             onClick={toggleForm}
                         >
@@ -179,15 +182,15 @@ const AddUserForm = ({
                     </div>
                 </form>
             </div>
-            <div className="p-5 h-4/5 sm:h-full flex justify-center items-center bg-white rounded-r-3xl border border-orange-600">
-                <div className="flex flex-col items-center gap-5">
-                    <div className="text-orange-400">Profile Picture</div>
+            <div className="p-5 h-1/5 lg:h-full w-full flex justify-center items-center bg-white rounded-b-3xl lg:rounded-r-3xl lg:rounded-bl-none border border-orange-600">
+                <div className="flex lg:flex-col items-center gap-5">
+                    <div className="text-orange-400 sm:text-2xl text-lg text-center">Profile Picture</div>
                     <img
-                        className="w-40 h-40 bg-orange-400"
-                        src={preview || avatar}
+                        className="lg:w-80 lg:h-80 sm:w-40 sm:h-40 w-20 h-20 bg-orange-400 rounded-full"
+                        src={preview || avatar.src}
                         alt="avatar"
                     />
-                    <label htmlFor="file-upload" className="p-3 bg-orange-400 rounded-lg">
+                    <label htmlFor="file-upload" className="text-center sm:text-xl text-sm sm:px-5 sm:py-3 px-2 py-1 bg-orange-400 text-white rounded-full hover:bg-bg-primary hover:text-orange-400">
                         Select Image
                     </label>
                     <input
