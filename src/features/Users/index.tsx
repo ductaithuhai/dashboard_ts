@@ -92,27 +92,30 @@ const Users = () => {
 
     return (
         <>
-            <div className='w-full h-screen grid grid-rows-12'>
-                <div className='row-start-1 row-end-2 w-full h-auto flex justify-between items-center px-12'>
-                    <div className='text-3xl font-bold'>User</div>
-                    <div className='flex gap-5'>
-                        <button className='bg-white bg-opacity-100 text-black px-4 py-2 rounded-full' onClick={exportToExcel}>
+            <div className='max-w-full h-full grid grid-rows-12'>
+                <div className='row-start-1 row-end-2 w-full h-auto flex justify-between items-center sm:px-12 px-2 py-2'>
+                    <div className='text-2xl sm:text-3xl font-bold'>User</div>
+                    <div className='w-full flex justify-end gap-5'>
+                        <button className='hidden sm:flex sm:bg-white sm:bg-opacity-100 sm:text-black sm:px-4 sm:py-2 sm:rounded-full' onClick={exportToExcel}>
                             Export to Excel
                         </button>
-                        <button className='bg-white bg-opacity-100 text-black px-4 py-2 rounded-full' onClick={toggleFormProp}>
+                        <button className='flex sm:hidden bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full text-sm' onClick={exportToExcel}>
+                            Export
+                        </button>
+                        <button className='bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full' onClick={toggleFormProp}>
                             {showAddUserForm ? 'Cancel' : 'Add New User'}
                         </button>
                     </div>
                 </div>
 
-                <div className='row-start-2 row-end-3 w-full h-auto flex justify-start items-center gap-5 py-3 px-12'>
-                    <input className='bg-white bg-opacity-100 text-black px-4 py-2 rounded-full'
+                <div className='row-start-2 row-end-3 w-full h-auto flex lg:justify-start items-center justify-between gap-5 py-3 sm:px-12 px-2'>
+                    <input className='w-1/2 sm:w-full bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full'
                         type="text"
                         placeholder="Search by email, first name, last name..."
                         value={searchTerm}
                         onChange={handleSearchChange}
                     />
-                    <select className='bg-white bg-opacity-100 text-black px-4 py-2 rounded-full'
+                    <select className='w-1/2 sm:w-full bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full'
                         value={filterRole}
                         onChange={handleFilterRoleChange}
                     >
@@ -121,14 +124,14 @@ const Users = () => {
                         <option value="Admin">Admin</option>
                     </select>
 
-                    <button className='bg-white bg-opacity-100 text-black px-4 py-2 rounded-full' onClick={exportToExcel}>
+                    <button className='bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full' onClick={exportToExcel}>
                         Search
                     </button>
                 </div>
 
-                <div className='row-start-3 row-end-12 w-full h-full overflow-auto'>
-                    <table className='w-full h-full'>
-                        <thead className='text-left table-header-group'>
+                <div className='text-sm sm:text-base row-start-3 row-end-12 w-full h-full max-h-[400px] sm:max-h-[800px] lg:max-h-[450px] lg:overflow-auto overflow-x-scroll'>
+                    <table className='w-full min-w-full h-full'>
+                        <thead className='text-left table-header-group w-full h-full'>
                             <tr>
                                 <th className='px-4 py-2'>No</th>
                                 <th className='px-4 py-2'>Email</th>
@@ -138,7 +141,7 @@ const Users = () => {
                                 <th className='px-4 py-2'>Role</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className='table-row-group w-full h-full'  >
                             {currentUsers.map((user, index) => (
                                 <tr key={user.id} className="table-row">
                                     <td className='table-cell px-4 py-2'>{indexOfFirstUser + index + 1}</td>
@@ -153,13 +156,14 @@ const Users = () => {
                     </table>
                 </div>
 
-                <div className='row-start-12 row-end-13 w-full h-auto flex justify-end items-center px-12 gap-5'>
+                <div className='row-start-12 row-end-13 w-full h-auto flex justify-center items-center sm:px-6 px-2 sm:gap-5 gap-1 text-sm sm:text-base'>
                     <div>
                         {indexOfFirstUser + 1}-{indexOfLastUser} of {filteredUsers.length}
                     </div>
 
-                    <div>
-                        <label htmlFor="usersPerPage" >Rows per page: </label>
+                    <div className='flex items-center gap-1 text-sm sm:text-base'>
+                        <label htmlFor="usersPerPage" className='hidden sm:flex'>Rows per page: </label>
+                        <label htmlFor="usersPerPage" className='sm:hidden'>Rows: </label>
                         <select className='rounded-full' value={usersPerPage} onChange={handleUsersPerPageChange}>
                             <option value={5}>5</option>
                             <option value={10}>10</option>
@@ -181,7 +185,11 @@ const Users = () => {
                 </div>
             </div>
             {showAddUserForm && (
-                <AddUserForm onSubmit={onSubmitProp} toggleForm={toggleFormProp} />
+                <div className='fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md z-50'>
+                    <div className='absolute inset-0 flex items-center justify-center'>
+                        <AddUserForm onSubmit={onSubmitProp} toggleForm={toggleFormProp} />
+                    </div>
+                </div>
             )}
         </>
     );

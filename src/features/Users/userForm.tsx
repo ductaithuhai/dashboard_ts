@@ -47,12 +47,12 @@ const AddUserForm = ({
     };
 
     return (
-        <div className="fixed w-1/2 h-4/5 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 grid grid-cols-4 bg-white rounded-3xl z-50">
-            <div className="col-span-3 flex flex-col gap-5 justify-center items-start p-8 bg-blue-500 text-white rounded-l-3xl">
-                <div className="text-3xl">Add New User</div>
-                <div className="text-2xl">User Detail</div>
+        <div className="fixed w-5/6 h-4/5 sm:h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 grid grid-cols-4 bg-orange-400 rounded-3xl z-50">
+            <div className="col-span-3 h-4/5 sm:h-full flex flex-col gap-5 justify-center items-start p-8 bg-orange-400 text-black rounded-l-3xl">
+                <div className="sm:text-3xl text-2xl">Add New User</div>
+                <div className="sm:text-2xl text-xl">User Detail</div>
                 <form
-                    className="w-full h-full flex flex-col items-center justify-between gap-5"
+                    className="w-full h-full flex flex-col items-center justify-between sm:gap-5 gap-2"
                     onSubmit={handleSubmit(handleFormSubmit as any)}
                 >
                     <div className="w-full flex justify-center gap-12">
@@ -162,15 +162,15 @@ const AddUserForm = ({
                             <p style={{ color: "red" }}>{errors.confirmPassword.message as string}</p>
                         )}
                     </div>
-                    <div className="w-full flex items-center justify-center gap-10">
+                    <div className="w-full flex items-center justify-between sm:gap-10 gap-2">
                         <button
-                            className="bg-white px-8 py-2 text-blue-500 rounded-lg"
+                            className="bg-white sm:px-8 sm:py-2 px-4 py-1 text-sm sm:text-base text-orange-600 rounded-lg"
                             type="submit"
                         >
                             Add User
                         </button>
                         <button
-                            className="bg-white px-8 py-2 text-blue-500 rounded-lg"
+                            className="bg-white sm:px-8 sm:py-2 px-4 py-1 text-sm sm:text-base text-orange-600 rounded-lg"
                             type="button"
                             onClick={toggleForm}
                         >
@@ -179,15 +179,15 @@ const AddUserForm = ({
                     </div>
                 </form>
             </div>
-            <div className="p-5 flex justify-center items-center bg-white rounded-r-3xl border border-blue-500">
+            <div className="p-5 h-4/5 sm:h-full flex justify-center items-center bg-white rounded-r-3xl border border-orange-600">
                 <div className="flex flex-col items-center gap-5">
-                    <div className="text-blue-500">Profile Picture</div>
+                    <div className="text-orange-400">Profile Picture</div>
                     <img
-                        className="w-40 h-40 bg-blue-500"
+                        className="w-40 h-40 bg-orange-400"
                         src={preview || avatar}
                         alt="avatar"
                     />
-                    <label htmlFor="file-upload" className="p-3 bg-blue-500 rounded-lg">
+                    <label htmlFor="file-upload" className="p-3 bg-orange-400 rounded-lg">
                         Select Image
                     </label>
                     <input

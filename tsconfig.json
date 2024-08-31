@@ -1,4 +1,9 @@
 {
+  "moduleResolution": "node",
+
+  "compilerOptions": {
+    "jsx": "preserve",
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },

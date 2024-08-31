@@ -9,6 +9,12 @@ export default {
       colors: {
         "bg-primary": "#eBDFD7",
       },
+      height: {
+        niceper: "calc(1100% / 12)",
+      },
+      backdropBlur: {
+        md: "10px",
+      },
     },
   },
   plugins: [],

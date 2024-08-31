@@ -15,7 +15,7 @@ function Sidebar() {
                         src={logo}
                         alt="logo"
                     />
-                    <div className="lg:hidden h-24 w-full bg-slate-950 flex items-center justify-center">
+                    <div className="lg:hidden h-24 w-full bg-orange-500 flex items-center justify-center">
                         <i className="text-white fa-solid fa-bars sm:text-4xl text-2xl" />
                     </div>
                 </div>
