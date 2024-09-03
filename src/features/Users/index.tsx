@@ -14,17 +14,31 @@ const Users = () => {
         lastName: `Lastname${i + 1}`,
         role: 'User',
     })));
-    const [showAddUserForm, setShowAddUserForm] = useState(false);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [filterRole, setFilterRole] = useState('');
 
-    const filteredUsers = usersData.filter(user =>
+    interface User {
+        id: number;
+        email: string;
+        phoneNumber: string;
+        firstName: string;
+        lastName: string;
+        role: string;
+    }
+
+    const [showAddUserForm, setShowAddUserForm] = useState(false);
+    const [filterRole, setFilterRole] = useState('');
+    const [searchTerm, setSearchTerm] = useState<string>('');
+    const [inputValue, setInputValue] = useState<string>('');
+
+    let filteredUsers = usersData.filter(user =>
         (user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
             user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
             user.lastName.toLowerCase().includes(searchTerm.toLowerCase())) &&
         (filterRole ? user.role === filterRole : true)
     );
 
+    if (filteredUsers.length === 0) {
+        filteredUsers = usersData;
+    }
     const totalPages = Math.ceil(usersData.length / usersPerPage);
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
@@ -67,9 +81,18 @@ const Users = () => {
         setShowAddUserForm(!showAddUserForm);
     };
 
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(e.target.value);
+    const handleSearchClick = () => {
+        setSearchTerm(inputValue);
         setCurrentPage(1);
+    };
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if ((e.target.value) !== "") {
+            setInputValue(e.target.value);
+        }
+        else {
+            setSearchTerm(e.target.value);
+        }
     };
 
     const handleFilterRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -77,18 +100,13 @@ const Users = () => {
         setCurrentPage(1);
     };
 
-    interface User {
-        id: number;
-        email: string;
-        phoneNumber: string;
-        firstName: string;
-        lastName: string;
-        role: string;
-    }
+
 
     const onSubmitProp = (user: User) => {
         setUsersData((usersData) => [...usersData, user]);
     };
+
+    console.log(currentUsers);
 
     return (
         <>
@@ -96,14 +114,14 @@ const Users = () => {
                 <div className='row-start-1 row-end-2 w-full h-auto flex justify-between items-center sm:px-4 px-6 py-2'>
                     <div className='text-2xl sm:text-5xl font-bold'>User</div>
                     <div className='w-full flex justify-end gap-5'>
-                        <button className='hidden sm:flex sm:bg-white sm:bg-opacity-100 sm:text-black sm:px-4 sm:py-2 sm:rounded-full' onClick={exportToExcel}>
+                        <button className='hidden sm:text-xl sm:flex sm:bg-white sm:bg-opacity-100 sm:text-black sm:px-4 sm:py-2 sm:rounded-full sm:hover:bg-orange-500 sm:hover:text-white' onClick={exportToExcel}>
                             Export to Excel
                         </button>
-                        <button className='flex sm:hidden bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1.5 rounded-full' onClick={exportToExcel}>
+                        <button className='flex text-lg sm:hidden bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1.5 rounded-full hover:bg-orange-500 hover:text-white' onClick={exportToExcel}>
                             Export
                         </button>
-                        <button className='bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full' onClick={toggleFormProp}>
-                            {showAddUserForm ? 'Cancel' : 'Add New User'}
+                        <button className='sm:text-xl bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full sm:hover:bg-orange-500 sm:hover:text-white' onClick={toggleFormProp}>
+                            Add New User
                         </button>
                     </div>
                 </div>
@@ -112,10 +130,9 @@ const Users = () => {
                     <input className='w-1/2 sm:w-1/4 lg:w-1/6 bg-white bg-opacity-100 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full'
                         type="text"
                         placeholder="Search by email, first name, last name..."
-                        value={searchTerm}
                         onChange={handleSearchChange}
                     />
-                    <select className='w-1/2 sm:w-1/4 lg:w-1/6 bg-white bg-opacity-100 text-black sm:px-6 px-2 sm:py-2 py-[6.5px] rounded-full'
+                    <select className='w-1/2 sm:w-1/4 lg:w-1/6 bg-white bg-opacity-100 text-black sm:px-6 px-2 sm:py-[10.5px] py-[6.5px] rounded-full'
                         value={filterRole}
                         onChange={handleFilterRoleChange}
                     >
@@ -124,12 +141,12 @@ const Users = () => {
                         <option value="Admin">Admin</option>
                     </select>
 
-                    <button className='bg-white bg-opacity-100 sm:w-1/4 lg:w-1/6 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full' onClick={exportToExcel}>
+                    <button className='bg-orange-500 bg-opacity-100 sm:w-1/4 lg:w-1/6 text-black sm:px-4 px-2 sm:py-2 py-1 rounded-full hover:opacity-65 hover:text-white' value={searchTerm} onClick={handleSearchClick}>
                         Search
                     </button>
                 </div>
 
-                <div className='text-sm sm:text-base row-start-3 row-end-12 sm:p-4 p-2 w-full h-full max-h-[400px] sm:max-h-[800px] lg:max-h-[450px] lg:overflow-auto overflow-x-scroll'>
+                <div className='text-lg sm:text-xl row-start-3 row-end-12 sm:p-4 p-2 w-full h-full max-h-[400px] sm:max-h-[800px] lg:max-h-[600px] lg:overflow-auto overflow-x-scroll'>
                     <table className='w-full min-w-full h-full'>
                         <thead className='text-left table-header-group w-full h-1/6'>
                             <tr>
@@ -186,7 +203,7 @@ const Users = () => {
             </div>
             {showAddUserForm && (
                 <div className='fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md z-50'>
-                    <div className='absolute inset-0 flex items-center justify-center'>
+                    <div className='absolute inset-0'>
                         <AddUserForm onSubmit={onSubmitProp} toggleForm={toggleFormProp} />
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm,SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import PropTypes from "prop-types";
 import avatarplaceholder from "../../assets/img/avatarplaceholder.png";
 import "./styles.css";
@@ -28,7 +28,7 @@ const AddUserForm = ({
         reset,
     } = useForm<User>();
     const [avatar, setAvatar] = useState({ src: avatarplaceholder });
-    const [preview, setPreview1] = useState<string | null>(null);
+    const [preview, setPreview] = useState<string | null>(null);
 
     const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -36,7 +36,7 @@ const AddUserForm = ({
             const reader: FileReader = new FileReader();
             reader.onloadend = () => {
                 if (typeof reader.result === "string") {
-                    setPreview1(reader.result);
+                    setPreview(reader.result);
                     setAvatar({ src: reader.result });
                 }
             };
@@ -50,8 +50,8 @@ const AddUserForm = ({
         toggleForm();
     };
     return (
-        <div className="fixed w-5/6 h-4/5 sm:h-niceper top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:grid lg:grid-cols-4 flex flex-col justify-center items-center bg-orange-400 rounded-3xl z-50">
-            <div className="lg:col-span-3 h-4/5 lg:h-niceper w-full flex flex-col sm:gap-5 gap-1 justify-center items-start sm:p-8 p-4 bg-orange-400 text-white rounded-t-3xl lg:rounded-l-3xl">
+        <div className="fixed w-5/6 h-4/5 lg:h-niceper iceper top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:grid lg:grid-cols-4 flex flex-col items-center bg-orange-400 rounded-3xl z-50">
+            <div className="lg:col-start-1 lg:col-end-4 h-4/5 lg:h-full w-full flex flex-col sm:gap-5 gap-1 justify-center items-start sm:p-8 p-4 bg-orange-400 text-white rounded-t-3xl lg:rounded-l-3xl">
                 <div className="sm:text-3xl text-xl ">Add New User</div>
                 <div className="sm:text-2xl text-lg">User Detail</div>
                 <form
@@ -182,15 +182,15 @@ const AddUserForm = ({
                     </div>
                 </form>
             </div>
-            <div className="p-5 h-1/5 lg:h-full w-full flex justify-center items-center bg-white rounded-b-3xl lg:rounded-r-3xl lg:rounded-bl-none border border-orange-600">
-                <div className="flex lg:flex-col items-center gap-5">
+            <div className="lg:col-start-4 lg:col-end-5 h-1/5 lg:h-full w-full flex justify-center items-center bg-white rounded-b-3xl lg:rounded-r-3xl lg:rounded-bl-none border border-orange-600">
+                <div className="flex lg:flex-col justify-center items-center gap-2 py-2">
                     <div className="text-orange-400 sm:text-2xl text-lg text-center">Profile Picture</div>
                     <img
                         className="lg:w-80 lg:h-80 sm:w-40 sm:h-40 w-20 h-20 bg-orange-400 rounded-full"
                         src={preview || avatar.src}
                         alt="avatar"
                     />
-                    <label htmlFor="file-upload" className="text-center sm:text-xl text-sm sm:px-5 sm:py-3 px-2 py-1 bg-orange-400 text-white rounded-full hover:bg-bg-primary hover:text-orange-400">
+                    <label htmlFor="file-upload" className="text-center sm:text-xl text-sm sm:px-5 sm:py-3 px-1 py-1 bg-orange-400 text-white rounded-full hover:bg-bg-primary hover:text-orange-400">
                         Select Image
                     </label>
                     <input

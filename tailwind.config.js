@@ -3,9 +3,6 @@ export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      fontFamily: {
-        customFont: ["Comfortaa", "sans-serif"],
-      },
       colors: {
         "bg-primary": "#eBDFD7",
       },
